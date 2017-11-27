@@ -1,7 +1,9 @@
 package org.seckill.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.seckill.dao.SeckillDao;
 import org.seckill.dao.SuccessKilledDao;
@@ -125,7 +127,19 @@ public class SeckillServiceImpl implements SeckillService {
 
 	public SeckillExecution executeSeckillByProcedure(long seckillId,
 			long userPhone, String md5) {
-		
+		if(md5 == null || !md5.equals(getMd5(seckillId))) {
+			return new SeckillExecution(seckillId, SeckillStatEnum.DATA_REWRITE);
+		}
+		Date killTime = new Date();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("seckillId", seckillId);
+		map.put("userPhone", userPhone);
+		map.put("killTime", killTime);
+		map.put("result", null);
+		try {
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return null;
 	}
 
