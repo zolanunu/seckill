@@ -83,5 +83,24 @@ public class SeckillServiceTest {
 			logger.info(execution.getStateInfo());
 		}
 	}
-
+	@Test
+	public void testSeckillLogic() throws Exception {
+		long id = 1001;
+		Exposer exposer = seckillService.exportSeckillUrl(id);
+		if(exposer.isExposed()) {
+			logger.info("exposer = {}", exposer);
+			long phone = 13502171127L;
+			String md5 = exposer.getMd5();
+			try {
+				SeckillExecution execution = seckillService.executeSeckill(id, phone, md5);
+				logger.info("result = {}", execution);
+			} catch (RepeatKillException e) {
+				logger.error(e.getMessage());
+			} catch (SeckillCloseException e) {
+				logger.error(e.getMessage());
+			}
+		} else {
+			logger.error("ÃëÉ±Î´¿ªÆô");
+		}
+	}
 }

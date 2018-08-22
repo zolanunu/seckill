@@ -7,6 +7,7 @@
 -- use seckill;
 
 -- 创建秒杀库存表
+-- key: 建立索引 
 drop table if exists seckill;
 create table seckill (
 	seckillId bigint not null auto_increment comment '商品库存id',
@@ -39,7 +40,7 @@ create table success_killed (
 	userPhone bigint not null comment '用户登陆号码',
 	state tinyint not null default -1 comment '状态标识：-1 无效, 0 成功, 1 已付款',
 	createTime timestamp not null default '0000-00-00 00:00:00' comment '创建时间',
-	primary key(seckillId, userPhone),/*联合主键*/
+	primary key(seckillId, userPhone),/*联合主键，防止用户对同一个商品重复秒杀*/
 	key idx_createTime(createTime)
 )engine = InnoDB default charset=utf8 comment='秒杀成功明细表';
 
